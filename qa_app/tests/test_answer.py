@@ -9,7 +9,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from answer import select_answer  # noqa: E402
-from retrieval import Passage  # noqa: E402
+from web_search import Passage  # noqa: E402
 
 
 def logit(p: float) -> float:

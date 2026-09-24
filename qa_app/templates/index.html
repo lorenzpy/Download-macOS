@@ -5,9 +5,10 @@
   <title>Frage &rarr; Textantwort</title>
   <style>
     body { font-family: system-ui, sans-serif; max-width: 720px; margin: 3rem auto; padding: 0 1rem; color: #222; }
-    form { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+    form { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
     input[type=text] { flex: 1; padding: 0.6rem; font-size: 1rem; }
     button { padding: 0.6rem 1.2rem; font-size: 1rem; cursor: pointer; }
+    .clarify { margin: 1.5rem 0; padding: 1rem; border-left: 3px solid #a66a00; background: #fff6e6; }
     .passage { margin-bottom: 1.5rem; padding: 1rem; border-left: 3px solid #444; background: #f7f7f7; }
     .passage p { margin: 0 0 0.5rem 0; line-height: 1.5; }
     .cite { font-size: 0.85rem; color: #555; }
@@ -18,10 +19,22 @@
 </head>
 <body>
   <h1>Frage stellen</h1>
-  <form method="post">
-    <input type="text" name="question" placeholder="Deine Frage..." value="{{ question }}" required>
-    <button type="submit">Suchen</button>
-  </form>
+
+  {% if clarify_question %}
+    <div class="clarify">
+      <p><strong>Kurze Rückfrage:</strong> {{ clarify_question }}</p>
+      <form method="post">
+        <input type="hidden" name="original_question" value="{{ original_question }}">
+        <input type="text" name="clarification_answer" placeholder="Deine Antwort..." required autofocus>
+        <button type="submit">Weiter</button>
+      </form>
+    </div>
+  {% else %}
+    <form method="post">
+      <input type="text" name="question" placeholder="Deine Frage..." value="{{ question }}" required>
+      <button type="submit">Suchen</button>
+    </form>
+  {% endif %}
 
   {% if error %}
     <p class="error">{{ error }}</p>

@@ -7,13 +7,13 @@ import math
 from dataclasses import dataclass
 from typing import Callable, Sequence
 
-from retrieval import Passage
+from web_search import Passage
 
 ScoreFn = Callable[[str, Sequence[str]], list[float]]
 
 HIGH_CONFIDENCE = 0.85  # sigmoid-normalized score: one passage is enough
 MIN_RELEVANCE = 0.4  # below this, a passage is not included at all
-MAX_PASSAGES = 5
+MAX_PASSAGES = 6
 
 
 @dataclass
