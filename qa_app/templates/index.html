@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Frage &rarr; Textantwort</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 3rem auto; padding: 0 1rem; color: #222; }
+    form { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+    input[type=text] { flex: 1; padding: 0.6rem; font-size: 1rem; }
+    button { padding: 0.6rem 1.2rem; font-size: 1rem; cursor: pointer; }
+    .passage { margin-bottom: 1.5rem; padding: 1rem; border-left: 3px solid #444; background: #f7f7f7; }
+    .passage p { margin: 0 0 0.5rem 0; line-height: 1.5; }
+    .cite { font-size: 0.85rem; color: #555; }
+    .cite a { color: #555; }
+    .score { font-size: 0.8rem; color: #888; }
+    .error { color: #b00020; }
+  </style>
+</head>
+<body>
+  <h1>Frage stellen</h1>
+  <form method="post">
+    <input type="text" name="question" placeholder="Deine Frage..." value="{{ question }}" required>
+    <button type="submit">Suchen</button>
+  </form>
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  {% if result %}
+    <h2>Antwort (aus vorhandenen Texten zusammengesetzt)</h2>
+    {% for r in result %}
+      <div class="passage">
+        <p>{{ r.passage.text }}</p>
+        <div class="cite">
+          Quelle: <a href="{{ r.passage.source_url }}" target="_blank" rel="noopener">{{ r.passage.source_title }}</a>
+          <span class="score">(Relevanz: {{ "%.0f"|format(r.score * 100) }} %)</span>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</body>
+</html>
